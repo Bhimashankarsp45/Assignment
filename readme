@@ -1,0 +1,21 @@
+This Java program uses Selenium WebDriver to interact with the OWASP Juice Shop's login form and attempts a controlled SQL injection attack to test for vulnerabilities.
+Requirements
+Java JDK
+Selenium WebDriver library
+ChromeDriver (or the appropriate WebDriver for your browser)
+OWASP Juice Shop application (https://juice-shop.herokuapp.com/#/login)
+Setup
+1. Ensure you have Java installed on your system.
+2. Add Selenium WebDriver to your project's dependencies.
+3. Download and configure ChromeDriver to match your browser version.
+Running the Program
+1. Run the Java program using your IDE or command line.
+2. The program will open a Chrome browser, navigate to the Juice Shop login page, and attempt the SQL injection.
+3. The results will be printed to the console, indicating whether a SQL injection vulnerability was detected.
+Exception Handling
+The program uses a `try-catch-finally` block to handle exceptions.
+If an element is not found or the test encounters an issue, the exception is caught, and the stack trace is printed for debugging purposes.
+The browser is closed in the `finally` block to ensure cleanup.
+Assumptions
+The test assumes that the Juice Shop application is running and accessible.
+The ChromeDriver executable is correctly configured in the system path.
