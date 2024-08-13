@@ -1,0 +1,35 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+public class SQLInjectionTest {
+    public static void main(String[] args) {
+        System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
+        ChromeOptions options = new ChromeOptions();
+        WebDriver driver = new ChromeDriver(options);
+try {
+            driver.get("https://juice-shop.herokuapp.com/#/login");
+            WebElement usernameField = driver.findElement(By.id("email"));
+            WebElement passwordField = driver.findElement(By.id("password"));
+            String maliciousUsername = "' OR '1'='1";
+            usernameField.sendKeys(maliciousUsername);
+            passwordField.sendKeys("ValidPassword123");
+            WebElement loginButton = driver.findElement(By.id("loginButton"));
+            loginButton.click();
+            String pageSource = driver.getPageSource();
+            if (pageSource.contains("Invalid email or password")) {
+                System.out.println("Login failed as expected.");
+            } else if (pageSource.toLowerCase().contains("sql") || pageSource.toLowerCase().contains("syntax")) {
+                System.out.println("Possible SQL Injection vulnerability detected!");
+            } else {
+                System.out.println("No apparent SQL Injection vulnerability detected.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            driver.quit();
+        }
+    }
+}
